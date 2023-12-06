@@ -2,6 +2,8 @@ import argparse
 
 arg_parser = argparse.ArgumentParser(description='Lonklink')
 
+arg_parser.add_argument('--dataset-folder-path', type=str, default='data', help='Path where Dataset files will be saved')
+
 arg_parser.add_argument('--total-users', type=int, default=400, help='Total Quantity of Users')
 arg_parser.add_argument('--total-news', type=int, default=200, help='Total Quantity of News')
 arg_parser.add_argument('--total-posts', type=int, default=4000, help='Total Quantity of Posts')
@@ -29,6 +31,7 @@ ages = [i for i in range(min_age, max_age + 1)]
 
 def get_dataset_params():
     return {
+        'dataset_folder_path': arg_parser.parse_args().dataset_folder_path,
         'total_users': arg_parser.parse_args().total_users,
         'total_news': arg_parser.parse_args().total_news,
         'total_posts': arg_parser.parse_args().total_posts,

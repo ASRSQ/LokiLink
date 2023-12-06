@@ -2,14 +2,14 @@ import os
 import pandas as pd
 
 class Dataset:
-    def __init__(self, total_users, total_news, total_posts):
+    def __init__(self, total_users, total_news, total_posts, dataset_folder_path):
         self.total_users = total_users
         self.total_news = total_news
         self.total_posts = total_posts
         self.users = []
         self.news = []
         self.posts = []
-        self.dataset_folder_path = 'data'
+        self.dataset_folder_path = dataset_folder_path
 
     def generate_users_csv(self):
         df_users = pd.DataFrame(columns=['id', 'age', 'location', 'shared_news', 'posts_made', 'days_account_exists', 'posts_per_day', 'total_posts', 'fake_news_count', 'political_news_count', 'total_posts_reach', 'total_news_shared'])
