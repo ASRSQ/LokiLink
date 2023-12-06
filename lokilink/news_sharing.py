@@ -1,4 +1,5 @@
 import random
+import numpy as np
 from dataset_params import get_dataset_params
 
 params = get_dataset_params()
@@ -59,3 +60,37 @@ class FriendGenerator:
   def get_chance_of_being_friends(self, friend):
       chance_being_friends = self.chance_calculator.get_total_chance(friend)
       return chance_being_friends
+
+class ReachCalculator:
+  def __init__(self, dataset):
+    self._dataset = dataset
+    self._dataset_users = dataset.users
+    self._dataset_news = dataset.news
+
+  def calculate_reach_news_sharing(self):
+    for news_idx, current_news in enumerate(self._dataset_news):
+      reach = self.dfs_news(news_idx)
+
+      for user_idx, current_user in enumerate(self._dataset_users):
+        current_user.total_posts_reach += reach[user_idx]
+
+  def dfs_news(self, news_id):
+    target_news = self._dataset_news[news_id]
+    mtx = target_news.am.mtx
+    transposed_mtx = np.transpose(mtx)
+    reach = [0 for _ in range(self._dataset.total_users)]
+    visited = set()
+
+    def dfs_reach(user_id, distance):
+      visited.add(user_id)
+      reach[user_id] = distance
+
+      for i, _ in enumerate(transposed_mtx[user_id]):
+        if i not in visited and transposed_mtx[user_id][i] == 1:
+          dfs_reach(i, distance + 1)
+
+    for i in range(len(mtx)):
+      if sum(mtx[i]) == 0:
+          dfs_reach(i, 0)
+
+    return reach

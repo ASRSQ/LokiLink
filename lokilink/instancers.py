@@ -59,8 +59,8 @@ class RandomNewsInstancer:
 class RandomPostInstancer:
     def __init__(self, dataset):
         self._dataset = dataset
-        self._dataset_news = dataset.news
         self._dataset_users = dataset.users
+        self._dataset_news = dataset.news
         self._dataset_posts = dataset.posts
         self.create_posts()
 
