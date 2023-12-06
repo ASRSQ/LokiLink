@@ -5,9 +5,21 @@ import random
 import uuid
 from collections import deque
 
-total_users = 100
-total_news = 100
-total_posts = 1000
+import argparse
+
+arg_parser = argparse.ArgumentParser(description='Lonklink')
+
+arg_parser.add_argument('--total-users', type=int, default=400, help='Total Quantity of Users')
+arg_parser.add_argument('--total-news', type=int, default=200, help='Total Quantity of News')
+arg_parser.add_argument('--total-posts', type=int, default=4000, help='Total Quantity of Posts')
+
+arg_parser.add_argument('--weight-chance-age', type=float, default=2, help='Weight Chance Age')
+arg_parser.add_argument('--weight-chance-location', type=float, default=2, help='Weight Chance Location')
+arg_parser.add_argument('--weight-chance-randomness', type=float, default=1, help='Weight Chance Randomness')
+
+total_users = arg_parser.parse_args().total_users
+total_news = arg_parser.parse_args().total_news
+total_posts = arg_parser.parse_args().total_posts
 
 df_users = pd.DataFrame(columns=['id', 'age', 'location', 'shared_news', 'posts_made', 'days_account_exists', 'posts_per_day', 'total_posts', 'fake_news_count', 'political_news_count', 'total_posts_reach', 'total_news_shared'])
 df_posts = pd.DataFrame(columns=['id', 'source_idx', 'destination_idx', 'news_idx', 'is_fake_news', 'is_political_news'])
